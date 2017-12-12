@@ -48,3 +48,10 @@ Temporary Items
 
 Library/*
 Temp/*
+Assets/Plugins/*
+Assets/Plugins.meta
+.idea/*
+
+*.csproj
+*.sln
+*.cache
