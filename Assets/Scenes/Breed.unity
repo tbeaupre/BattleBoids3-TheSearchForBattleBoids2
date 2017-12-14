@@ -664,6 +664,7 @@ GameObject:
   - component: {fileID: 929165772}
   - component: {fileID: 929165774}
   - component: {fileID: 929165775}
+  - component: {fileID: 929165773}
   m_Layer: 5
   m_Name: VerticalLayout
   m_TagString: Untagged
@@ -692,6 +693,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &929165773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 929165771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3165519920022c49912ad6e32694d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &929165774
 CanvasRenderer:
   m_ObjectHideFlags: 0
