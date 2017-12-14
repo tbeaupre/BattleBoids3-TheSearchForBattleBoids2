@@ -20,7 +20,6 @@ namespace UI.BoidList
         
         private void Start()
         {
-            Init(BoidManager.GetCurrentBoids());
         }
     }
 }

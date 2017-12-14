@@ -14,9 +14,8 @@ namespace UI
 		public Text forwardButtonText;
 		private int currentStage = 0;
 
-		private List<BoidListItem> full;
+		private List<BoidListItem> full = new List<BoidListItem>();
 		private List<BoidListItem> save;
-		private List<BoidAttributes> breed;
 
 		private void Start()
 		{
@@ -31,16 +30,19 @@ namespace UI
 					// Stables
 					topBarText.text = "Boid Stables";
 					forwardButtonText.text = "Begin Breeding";
-					if (full == null)
+					if (full.Count == 0)
 					{
+						gameObject.GetComponentInChildren<BoidList.BoidList>().Init(BoidManager.GetCurrentBoids());
 						full = new List<BoidListItem>(gameObject.GetComponentsInChildren<BoidListItem>());
 					}
-					else
-					{
-						foreach (BoidListItem item in full) {
-							item.GetComponentInChildren<Toggle>().interactable = false;
-						}
+					foreach (BoidListItem item in full) {
+						item.gameObject.SetActive(true);
+						Toggle toggle = item.GetComponentInChildren<Toggle>();
+						toggle.interactable = false;
+						toggle.isOn = false;
 					}
+					Debug.Log(full.Count);
+					Debug.Log(BoidManager.GetCurrentBoids().Count);
 					break;
 				case 1 : 
 					// Select Boids to Save
@@ -58,15 +60,12 @@ namespace UI
 					forwardButtonText.text = "Breed";
 					if (save == null)
 					{
-						save = new List<BoidListItem>(full);
+						save = new List<BoidListItem>();
 						foreach (var item in full)
 						{
-							if (!item.GetComponentInChildren<Toggle>().isOn)
+							if (item.GetComponentInChildren<Toggle>().isOn)
 							{
-								save.Remove(item);
-							}
-							else
-							{
+								save.Add(item);
 								item.gameObject.SetActive(false);
 							}
 						}
@@ -81,29 +80,35 @@ namespace UI
 					break;
 				case 3 :
 					// Repopulate List
-					breed = new List<BoidAttributes>();
+					List<BoidAttributes> breed = new List<BoidAttributes>();
 					int toReplace = 0;
 					
 					foreach (BoidListItem item in full)
 					{
-						if (item.gameObject.activeSelf && !item.GetComponentInChildren<Toggle>())
+						if (item.gameObject.activeSelf)
 						{
-							BoidManager.RemoveBoid(item.attributes);
-							toReplace++;
-						}
-						else
-						{
-							breed.Add(item.attributes);
+							if (item.GetComponentInChildren<Toggle>().isOn)
+							{
+								breed.Add(item.attributes);
+							}
+							else
+							{
+								BoidManager.RemoveBoid(item.attributes);
+								DestroyImmediate(item);
+								toReplace++;
+							}
 						}
 					}
 
 					// Generate new boids and add them to flock.
 					List<BoidAttributes> newBoids = Breeding.BreedPlayerBoids(breed, toReplace);
 					BoidManager.AddBoids(newBoids);
-					gameObject.GetComponentInChildren<BoidList.BoidList>().Init(newBoids);
+					Debug.Log(full.Count);
+					Debug.Log(newBoids.Count);
 					
 					// Reset the Breeding Screen at the Stables
-					full = null;
+					full.Clear();
+					save = null;
 					currentStage = 0;
 					UpdateList();
 					break;

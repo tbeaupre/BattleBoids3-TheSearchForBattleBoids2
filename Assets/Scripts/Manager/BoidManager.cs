@@ -12,11 +12,6 @@ namespace Manager
 			return boids;
 		}
 
-		public static void AddBoid(BoidAttributes boid)
-		{
-			boids.Add(boid);
-		}
-
 		public static void AddBoids(List<BoidAttributes> newBoids)
 		{
 			boids.AddRange(newBoids);

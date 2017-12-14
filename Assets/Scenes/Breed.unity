@@ -323,7 +323,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 929165773}
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 929165773}
         m_MethodName: Forward
         m_Mode: 1
         m_Arguments:
@@ -702,6 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3165519920022c49912ad6e32694d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topBarText: {fileID: 1872004753}
   forwardButtonText: {fileID: 526137804}
 --- !u!222 &929165774
 CanvasRenderer:

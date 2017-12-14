@@ -15,7 +15,7 @@ public static class Breeding
 		List<BoidAttributes> boids = new List<BoidAttributes>();
 		Random r = new Random();
 
-		for (int i = stock.Count; i < numToGenerate; i++)
+		for (int i = 0; i < numToGenerate; i++)
 		{
 			int leftParent = r.Next(0, stock.Count);
 			int rightParent = r.Next(0, stock.Count);
