@@ -8,19 +8,19 @@ namespace UI.BoidList
     {
         public GameObject boidListItemPrefab;
         
-        public void Init(List<BoidAttributes> boids, float maxValue)
+        public void Init(List<BoidAttributes> boids)
         {
             foreach (BoidAttributes boid in boids)
             {
                 GameObject boidListItem = Instantiate(boidListItemPrefab);
                 boidListItem.transform.SetParent(transform);
-                boidListItem.GetComponent<BoidListItem>().Init(boid, maxValue);
+                boidListItem.GetComponent<BoidListItem>().Init(boid, BoidManager.NUM_BOIDS);
             }
         }
         
         private void Start()
         {
-            Init(BoidManager.GetCurrentBoids(), BoidManager.NUM_BOIDS);
+            Init(BoidManager.GetCurrentBoids());
         }
     }
 }

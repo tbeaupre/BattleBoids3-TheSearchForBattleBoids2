@@ -17,6 +17,11 @@ namespace Manager
 			boids.Add(boid);
 		}
 
+		public static void AddBoids(List<BoidAttributes> newBoids)
+		{
+			boids.AddRange(newBoids);
+		}
+
 		public static void RemoveBoid(BoidAttributes boid)
 		{
 			boids.Remove(boid);

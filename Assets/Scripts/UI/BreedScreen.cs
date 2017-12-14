@@ -10,6 +10,7 @@ namespace UI
 {
 	public class BreedScreen : MonoBehaviour
 	{
+		public Text topBarText;
 		public Text forwardButtonText;
 		private int currentStage = 0;
 
@@ -17,13 +18,19 @@ namespace UI
 		private List<BoidListItem> save;
 		private List<BoidAttributes> breed;
 
-		public void UpdateList()
+		private void Start()
+		{
+			UpdateList();
+		}
+
+		private void UpdateList()
 		{
 			switch (currentStage)
 			{
 				case 0 : 
 					// Stables
-					forwardButtonText.text = "Boid Stables";
+					topBarText.text = "Boid Stables";
+					forwardButtonText.text = "Begin Breeding";
 					if (full == null)
 					{
 						full = new List<BoidListItem>(gameObject.GetComponentsInChildren<BoidListItem>());
@@ -37,7 +44,8 @@ namespace UI
 					break;
 				case 1 : 
 					// Select Boids to Save
-					forwardButtonText.text = "Select Boids to Save";
+					topBarText.text = "Select Boids to Save";
+					forwardButtonText.text = "Next";
 					foreach (BoidListItem item in full) {
 						item.gameObject.SetActive(true);
 						item.GetComponentInChildren<Toggle>().interactable = true;
@@ -46,7 +54,8 @@ namespace UI
 					break;
 				case 2 : 
 					// Select Boids to Breed
-					forwardButtonText.text = "Select Boids to Breed";
+					topBarText.text = "Select Boids to Breed";
+					forwardButtonText.text = "Breed";
 					if (save == null)
 					{
 						save = new List<BoidListItem>(full);
@@ -88,7 +97,15 @@ namespace UI
 						}
 					}
 
-					Breeding.BreedPlayerBoids(breed, toReplace);
+					// Generate new boids and add them to flock.
+					List<BoidAttributes> newBoids = Breeding.BreedPlayerBoids(breed, toReplace);
+					BoidManager.AddBoids(newBoids);
+					gameObject.GetComponentInChildren<BoidList.BoidList>().Init(newBoids);
+					
+					// Reset the Breeding Screen at the Stables
+					full = null;
+					currentStage = 0;
+					UpdateList();
 					break;
 			}
 		}
@@ -96,7 +113,7 @@ namespace UI
 		public void Forward()
 		{
 			currentStage++;
-			
+			UpdateList();
 		}
 
 		public void Back()
@@ -106,11 +123,10 @@ namespace UI
 			{
 				SceneManager.LoadScene("main");
 			}
-		}
-
-		private void SetText(string text)
-		{
-			forwardButtonText.text = text;
+			else
+			{
+				UpdateList();
+			}
 		}
 	}
 }
