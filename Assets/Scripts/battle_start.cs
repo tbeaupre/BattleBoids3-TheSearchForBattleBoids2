@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class battle_start : MonoBehaviour
@@ -10,16 +11,15 @@ public class battle_start : MonoBehaviour
     // Use this for initialization
     private Vector3 pos;
     void Start () {
-        var team_one_size = 40;
         var j = 0;
         var l = 10;
-        for (var i = 0; i < team_one_size; i++) {
+        for (var i = 0; i < BoidManager.NUM_BOIDS; i++) {
             l++;
             if ((i % 8) == 0 && i != 0) {
                 j++;
                 l -= 8;
             }
-            pos = new Vector3(3, 3+j, (l*1.1f)-(team_one_size / 2));
+            pos = new Vector3(3, 3+j, (l*1.1f)-(BoidManager.NUM_BOIDS / 2));
             var boid = GameObject.Instantiate(boidPrefab, pos, transform.rotation);
 
             //GameObject myGameObject = new GameObject("Test Object"); // Make a new GO.
@@ -31,10 +31,9 @@ public class battle_start : MonoBehaviour
             gameObjectsRigidBody.mass = 1f;
         }
 
-        var team_two_size = 40;
         j = 0;
         l = 10;
-        for (var i = 0; i < team_two_size; i++)
+        for (var i = 0; i < BoidManager.NUM_BOIDS; i++)
         {
             l++;
             if ((i % 8) == 0 && i != 0)
@@ -42,7 +41,7 @@ public class battle_start : MonoBehaviour
                 j++;
                 l -= 8;
             }
-            pos = new Vector3(-3, 3 + j, (l * 1.1f) - (team_two_size / 2));
+            pos = new Vector3(-3, 3 + j, (l * 1.1f) - (BoidManager.NUM_BOIDS / 2));
             var boid = GameObject.Instantiate(enemyBoidPrefab, pos, transform.rotation);
 
             //GameObject myGameObject = new GameObject("Test Object"); // Make a new GO.

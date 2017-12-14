@@ -41,8 +41,6 @@ namespace UI
 						toggle.interactable = false;
 						toggle.isOn = false;
 					}
-					Debug.Log(full.Count);
-					Debug.Log(BoidManager.GetCurrentBoids().Count);
 					break;
 				case 1 : 
 					// Select Boids to Save
@@ -103,8 +101,6 @@ namespace UI
 					// Generate new boids and add them to flock.
 					List<BoidAttributes> newBoids = Breeding.BreedPlayerBoids(breed, toReplace);
 					BoidManager.AddBoids(newBoids);
-					Debug.Log(full.Count);
-					Debug.Log(newBoids.Count);
 					
 					// Reset the Breeding Screen at the Stables
 					full.Clear();
