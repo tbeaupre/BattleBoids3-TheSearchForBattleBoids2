@@ -1,13 +1,25 @@
 ﻿using UnityEngine;
 
 public class BasicBoid : BoidParent {
-		
+	public float agility = 0f;
+	public float agression = 0;
+	public float fear = 0;
+	public float bounce = 0;
+
+	public float push_strength;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		
+		
+
         rbody = GetComponent<Rigidbody>();
         boid = GameObject.Find("BasicBoid");
         enemy = "team2";
+		
 
+		
+		
 		speed = 2000f;
         mass = 2;
         size_x = 1;
@@ -44,4 +56,18 @@ public class BasicBoid : BoidParent {
         count2++;
 
     }
+	
+
+	public void init(float speed, float agility, float mass, float strength, float agression, float fear, float bounce)
+	{
+		this.speed = speed;
+		this.mass = mass;
+		this.push_strength = strength;
+		this.agression = agression;
+		this.fear = fear;
+		this.agility = agility;
+		this.bounce = bounce;
+
+
+	}
 }
