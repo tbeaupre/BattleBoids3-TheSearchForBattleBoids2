@@ -1,16 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BoidListItem : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+namespace UI.BoidList
+{
+	public class BoidListItem : MonoBehaviour {
+		public void Init(BoidAttributes attributes, float maxValue)
+		{
+			List<float> values = new List<float>()
+			{
+				attributes.Agression,
+				attributes.Bounciness,
+				attributes.Fear,
+				attributes.Mass,
+				attributes.Speed,
+				attributes.Strength,
+				attributes.TurnSpeed
+			};
+			gameObject.GetComponentInChildren<AttributeList>().Init(values, maxValue);
+		}
 	}
 }

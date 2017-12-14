@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using UnityEngine;
 
-public class AttributeBar : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+namespace UI.BoidList
+{
+	public class AttributeBar : MonoBehaviour {
+		public void Init(float value, float maxValue)
+		{
+			RectTransform outer = gameObject.GetComponentInParent<RectTransform>();
+			RectTransform inner = gameObject.GetComponent<RectTransform>();
+			float max = outer.rect.height;
+			
+			inner.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, value / maxValue * max);
+		}
 	}
 }
