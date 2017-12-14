@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 namespace UI.BoidList
@@ -19,12 +20,7 @@ namespace UI.BoidList
         
         private void Start()
         {
-            List<BoidAttributes> boids = new List<BoidAttributes>()
-            {
-                new BoidAttributes(1, 3, 5, 7, 9, 11, 13, 15, 17),
-            };
-            
-            Init(boids, 20);
+            Init(BoidManager.GetCurrentBoids(), BoidManager.NUM_BOIDS);
         }
     }
 }

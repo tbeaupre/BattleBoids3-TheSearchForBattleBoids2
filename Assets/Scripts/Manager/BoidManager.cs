@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Manager
 {
 	public static class BoidManager
 	{
-		private const int NUM_BOIDS = 20;
+		public const int NUM_BOIDS = 20;
 		private static List<BoidAttributes> boids = InitialFlock();
+
+		public static List<BoidAttributes> GetCurrentBoids()
+		{
+			return boids;
+		}
 
 		public static void AddBoid(BoidAttributes boid)
 		{

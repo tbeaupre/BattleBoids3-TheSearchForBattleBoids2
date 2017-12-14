@@ -8,7 +8,9 @@ public struct BoidAttributes
     public const int MAX_VALUE = 20;
     public const int MAX_SUM = 100;
     
-    public BoidAttributes(float speed, float mass, float strength, float size, float agression, float turnSpeed, float bounciness, int shape, float fear) : this()
+    private static Random random = new Random();
+    
+    public BoidAttributes(int shape, float size, float mass, float speed, float strength, float agression, float turnSpeed, float bounciness, float fear) : this()
     {
         Shape = shape;
         Size = size;
@@ -34,7 +36,6 @@ public struct BoidAttributes
     public static BoidAttributes GenerateRandomBoid()
     {
         int[] values = new int[8];
-        Random random = new Random();
         
         do
         {
