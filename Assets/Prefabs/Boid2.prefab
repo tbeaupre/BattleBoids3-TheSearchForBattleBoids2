@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33560430733662580}
   - component: {fileID: 65468836746001994}
   - component: {fileID: 23926352203078514}
-  - component: {fileID: 114028787445205386}
+  - component: {fileID: 114940569036744634}
   m_Layer: 0
   m_Name: Boid2
-  m_TagString: Untagged
+  m_TagString: team2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e60efb5ad18eefe409e1b1002ef19bc9, type: 2}
+  - {fileID: 2100000, guid: bdc615aba4695c0478c3b4023bb726df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,13 +87,13 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288795975864892}
-  m_Material: {fileID: 13400000, guid: 0bd6a0952f9639149bf76b8b1d869585, type: 2}
+  m_Material: {fileID: 13400000, guid: d7cceaeb2bf5bdb48ba0fa39753ab1c1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114028787445205386
+--- !u!114 &114940569036744634
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -101,9 +101,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1288795975864892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa8909122c150794a887ca474c416afb, type: 3}
+  m_Script: {fileID: 11500000, guid: a10217c099ee7de4ebe92e99a83649a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boid: {fileID: 1188042715452424, guid: dab2437b5ac577c49a73cf8525e43722, type: 2}
   target: {fileID: 0}
+  target_friend: {fileID: 0}
+  boid: {fileID: 0}
+  enemy: 
+  friend: 
   center: {x: 0, y: 0, z: 0}
+  count: 0
+  count2: 0
+  count3: 0
+  rbody: {fileID: 0}
+  speed: 0
+  mass: 0
+  bounciness: 0
+  size_x: 0
+  size_y: 0
+  size_z: 0
+  cohesion: 0
+  push_strength: 0
+  push_delay: 0
+  jump_strength: 0
+  jump_delay: 0

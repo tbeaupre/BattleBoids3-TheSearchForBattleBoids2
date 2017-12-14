@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114269192773054452}
   m_Layer: 0
   m_Name: BasicBoid
-  m_TagString: Untagged
+  m_TagString: team1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,14 +67,12 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33861811982547814
 MeshFilter:
@@ -90,7 +87,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188042715452424}
-  m_Material: {fileID: 13400000, guid: 0bd6a0952f9639149bf76b8b1d869585, type: 2}
+  m_Material: {fileID: 13400000, guid: d7cceaeb2bf5bdb48ba0fa39753ab1c1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -107,6 +104,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70b35433dfe7b54e99ea82f46dcacbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boid: {fileID: 0}
   target: {fileID: 0}
+  target_friend: {fileID: 0}
+  boid: {fileID: 0}
+  enemy: 
+  friend: 
   center: {x: 0, y: 0, z: 0}
+  count: 0
+  count2: 0
+  count3: 0
+  rbody: {fileID: 0}
+  speed: 0
+  mass: 0
+  bounciness: 0
+  size_x: 0
+  size_y: 0
+  size_z: 0
+  cohesion: 0
+  push_strength: 0
+  push_delay: 0
+  jump_strength: 0
+  jump_delay: 0

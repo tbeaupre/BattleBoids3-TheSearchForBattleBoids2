@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class battle_start : MonoBehaviour {
+public class battle_start : MonoBehaviour
+{
+    public GameObject boidPrefab;
+    public GameObject enemyBoidPrefab;
+    
     // Use this for initialization
     private Vector3 pos;
     void Start () {
@@ -16,8 +20,7 @@ public class battle_start : MonoBehaviour {
                 l -= 8;
             }
             pos = new Vector3(3, 3+j, (l*1.1f)-(team_one_size / 2));
-            var boid_prefab = Resources.Load("BasicBoid") as GameObject;
-            var boid = GameObject.Instantiate(boid_prefab, pos, transform.rotation);
+            var boid = GameObject.Instantiate(boidPrefab, pos, transform.rotation);
 
             //GameObject myGameObject = new GameObject("Test Object"); // Make a new GO.
             Rigidbody gameObjectsRigidBody = boid.AddComponent<Rigidbody>(); // Add the rigidbody.
@@ -40,8 +43,7 @@ public class battle_start : MonoBehaviour {
                 l -= 8;
             }
             pos = new Vector3(-3, 3 + j, (l * 1.1f) - (team_two_size / 2));
-            var boid_prefab = Resources.Load("Boid2") as GameObject;
-            var boid = GameObject.Instantiate(boid_prefab, pos, transform.rotation);
+            var boid = GameObject.Instantiate(enemyBoidPrefab, pos, transform.rotation);
 
             //GameObject myGameObject = new GameObject("Test Object"); // Make a new GO.
             Rigidbody gameObjectsRigidBody = boid.AddComponent<Rigidbody>(); // Add the rigidbody.
