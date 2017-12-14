@@ -2,235 +2,71 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Manager;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-public class Breeding
+public static class Breeding
 {
-	private int numOfBoids = 20;
-
-
-	
-	BasicBoid[] breedPlayerBoids(BasicBoid[] stock)
+	public static List<BoidAttributes> BreedPlayerBoids(List<BoidAttributes> stock, int numToGenerate)
 	{
-		BasicBoid[] boids = new BasicBoid[numOfBoids];
+		List<BoidAttributes> boids = new List<BoidAttributes>();
 		Random r = new Random();
 
-		for (int i = 0; i < stock.Length; i++)
+		for (int i = stock.Count; i < numToGenerate; i++)
 		{
-			boids[i] = stock[i];
-
-		}
-		int numToGenerate = numOfBoids - stock.Length;
-
-		for (int i = stock.Length; i < numToGenerate; i++)
-		{
-
-			int leftParent = r.Next(0, stock.Length);
-			int rightParent = r.Next(0, stock.Length);
+			int leftParent = r.Next(0, stock.Count);
+			int rightParent = r.Next(0, stock.Count);
 
 			while (leftParent == rightParent)
 			{
-				rightParent = r.Next(0, stock.Length);
+				rightParent = r.Next(0, stock.Count);
 			}
-			boids[i] = breedBoid(boids[leftParent], boids[rightParent]);
+			boids.Add(BreedBoid(stock[leftParent], stock[rightParent]));
 		}
 
 		return boids;
 	}
 
-	BasicBoid breedBoid(BasicBoid left, BasicBoid right)
+	private static BoidAttributes BreedBoid(BoidAttributes left, BoidAttributes right)
 	{
-		float speed = generateSpeed(left, right);
-		float strength = generateStrength(left, right);
-		float agility = generateAgility(left, right);
-		float agression = generateAgression(left, right);
-		float mass = generateMass(left, right);
-		float fear = generateFear(left, right);
-		float bounce = generateBounce(left, right);
-	
-		BasicBoid newBoid = new BasicBoid();
-		newBoid.init(speed, agility, mass, strength, agression, fear, bounce);	
+		float size = GenerateAttribute(left.Size, right.Size);
+		float speed = GenerateAttribute(left.Speed, right.Speed);
+		float strength = GenerateAttribute(left.Strength, right.Strength);
+		float agility = GenerateAttribute(left.TurnSpeed, right.TurnSpeed);
+		float agression = GenerateAttribute(left.Agression, right.Agression);
+		float mass = GenerateAttribute(left.Mass, right.Mass);
+		float fear = GenerateAttribute(left.Fear, right.Fear);
+		float bounce = GenerateAttribute(left.Bounciness, right.Bounciness);
 		
-		return newBoid;
-		
+		return new BoidAttributes(1, size, mass, speed, strength, agression, agility, bounce, fear);
 	}
 
-	float generateSpeed(BasicBoid left, BasicBoid right)
+	private static float GenerateAttribute(float left, float right)
 	{
-		float speed = 0;
+		float value = 0;
 		Random r = new Random();
 		int pctParent = r.Next(0, 100);
 
-		if (pctParent < 10)
+		if (pctParent < 10) // Random
 		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-		    speed = (float) num % 5000;
-		}else if (pctParent < 90)
+			value = r.Next(BoidAttributes.MAX_VALUE);
+		} 
+		else if (pctParent < 90) // Average
 		{
-			float num = (left.speed + right.speed) / 2;
+			value = (left + right) / 2;
 
 		}
-		else if (pctParent < 95)
+		else if (pctParent < 95) // One parent or the other
 		{
-			speed = left.speed;
+			value = left;
 		}
 		else
 		{
-			speed = right.speed;
+			value = right;
 		}
-		return speed;
+		return value;
 	}
-	float generateStrength(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			 str = (left.push_strength + right.push_strength) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.push_strength;
-		}
-		else
-		{
-			str = right.push_strength;
-		}
-		return str;
-	}
-	float generateAgility(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			str = (left.agility + right.agility) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.agility;
-		}
-		else
-		{
-			str = right.agility;
-		}
-		return str;
-	}
-	float generateAgression(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			str = (left.agression + right.agression) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.agression;
-		}
-		else
-		{
-			str = right.agression;
-		}
-		return str;
-	}
-	float generateMass(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			str = (left.mass + right.mass) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.mass;
-		}
-		else
-		{
-			str = right.mass;
-		}
-		return str;
-	}
-	float generateBounce(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			str = (left.bounce + right.bounce) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.bounce;
-		}
-		else
-		{
-			str = right.bounce;
-		}
-		return str;
-	}
-	float generateFear(BasicBoid left, BasicBoid right)
-	{
-		float str = 0;
-		Random r = new Random();
-		int pctParent = r.Next(0, 100);
-
-		if (pctParent < 10)
-		{
-			double num = Math.Pow(r.NextDouble(), r.NextDouble());
-			str = (float) num % 20;
-		}else if (pctParent < 90)
-		{
-			str = (left.fear + right.fear) / 2;
-
-		}
-		else if (pctParent < 95)
-		{
-			str = left.fear;
-		}
-		else
-		{
-			str = right.fear;
-		}
-		return str;
-	}
-	
 }
