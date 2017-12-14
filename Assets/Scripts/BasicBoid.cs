@@ -1,57 +1,63 @@
 ﻿using UnityEngine;
 
-public class BasicBoid : MonoBehaviour {
-	public GameObject boid;
-	public GameObject target;
-	float speed;
-	public Vector3 center;
-	//Collider m_collider;
-	private Rigidbody rbody;
-	int count;
+public class BasicBoid : BoidParent {
+		
 	// Use this for initialization
 	void Start () {
-		boid = GameObject.Find("BasicBoid");
-		speed = 2f;
-		count = 0;
-		center = new Vector3(0,0,0);
-		rbody = GetComponent<Rigidbody>();
-		//m_collider = GetComponent<Collider>();
-		//m_collider.enabled = true;
-	}
+        rbody = GetComponent<Rigidbody>();
+        boid = GameObject.Find("BasicBoid");
+        enemy = "team2";
+        friend = "team1";
+        count3 = 200;
+
+		speed = 1600f;
+        mass = 2;
+        size_x = 1;
+        size_y = 1;
+        size_z = 1;
+        push_strength = 20;
+        push_delay = 90;
+        jump_strength = 18;
+        jump_delay = 100;
+        bounciness = 100;
+        cohesion = 0;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		count++;
-		float step = speed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
 		var heading = center - transform.position;
 		var distance = heading.magnitude;
 		var direction = heading / distance;
 
-		if (distance > 0)
-		{
-			direction = heading / distance;
-			rbody.AddForce(direction * 10);
-		}
+        if (transform.position.y < -40) {
+            Destroy(gameObject);
+        }
 
-		if (count > 120)
-		{
-			count = 0;
-			GameObject[] gos = GameObject.FindGameObjectsWithTag("team2");
-			var dist = 10000f;
-			for (var i = 0; i < gos.Length; i++)
-			{
-				heading = gos[i].transform.position - transform.position;
-				distance = heading.magnitude;
-				if (distance < dist)
-				{
-					dist = distance;
-					target = gos[i];
-				}
-			}
-			heading = target.transform.position - transform.position;
-			distance = heading.magnitude;
-			direction = heading / distance;
-			rbody.AddForce(direction * 15, ForceMode.Impulse);
-		}
-	}
+        //if (distance > 5) {
+            direction = heading / distance;
+            rbody.AddForce(direction * step);
+        //} else {
+            if (count3 > 60) {
+                count3 = 0;
+                find_friend();
+            }
+            count3++;
+            move_towards_friend();
+        //}
+
+        if (count > push_delay && distance < 20) {
+            count = 0;
+            push();
+        }
+        count++;
+
+        if (count2 > jump_delay) {
+            count2 = 0;
+            jump();
+        }
+        count2++;
+
+    }
 }
