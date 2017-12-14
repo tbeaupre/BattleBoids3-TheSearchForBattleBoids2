@@ -9,16 +9,19 @@ public class Boid_enemy : BoidParent
         rbody = GetComponent<Rigidbody>();
         boid = GameObject.Find("BasicBoid");
         enemy = "team1";
+        friend = "team2";
 
-        speed = 2000f;
+        speed = 1600f;
         mass = 2;
-        size_x = 1f;
-        size_y = 1f;
-        size_z = 1.2f;
-        push_strength = 20;
-        push_delay = 40;
+        size_x = 0.7f+Random.Range(1,2);
+        size_y = 0.7f;
+        size_z = 0.7f;
+        push_strength = 35;
+        push_delay = 80;
         jump_strength = 0;
-        jump_delay = 10000;
+        jump_delay = 51000;
+        bounciness = 100;
+        cohesion = 50;
 
         transform.localScale = new Vector3(size_x,size_y,size_z);
     }
@@ -30,6 +33,10 @@ public class Boid_enemy : BoidParent
         var heading = center - transform.position;
         var distance = heading.magnitude;
         var direction = heading / distance;
+
+        if (transform.position.y < -40) {
+            Destroy(gameObject);
+        }
 
         if (distance > 2) {
             direction = heading / distance;
@@ -47,6 +54,15 @@ public class Boid_enemy : BoidParent
             jump();
         }
         count2++;
+
+
+        if (count3 > 60)
+        {
+            count3 = 0;
+            find_friend();
+        }
+        count3++;
+        move_towards_friend();
 
     }
 }

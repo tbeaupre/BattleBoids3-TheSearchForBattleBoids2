@@ -6,16 +6,16 @@ public class battle_start : MonoBehaviour {
     // Use this for initialization
     private Vector3 pos;
     void Start () {
-        var team_one_size = 15;
+        var team_one_size = 40;
         var j = 0;
-        var l = 0;
+        var l = 10;
         for (var i = 0; i < team_one_size; i++) {
             l++;
             if ((i % 8) == 0 && i != 0) {
                 j++;
                 l -= 8;
             }
-            pos = new Vector3(5, 3+j, (l*1.1f)-(team_one_size / 2));
+            pos = new Vector3(3, 3+j, (l*1.1f)-(team_one_size / 2));
             var boid_prefab = Resources.Load("BasicBoid") as GameObject;
             var boid = GameObject.Instantiate(boid_prefab, pos, transform.rotation);
 
@@ -25,12 +25,12 @@ public class battle_start : MonoBehaviour {
             //var boid_script = boid.GetComponent<BasicBoid>();
             //set mass
             //var boid_mass = boid_script.mass;
-            gameObjectsRigidBody.mass = 2;
+            gameObjectsRigidBody.mass = 1f;
         }
 
-        var team_two_size = 14;
+        var team_two_size = 40;
         j = 0;
-        l = 0;
+        l = 10;
         for (var i = 0; i < team_two_size; i++)
         {
             l++;
@@ -39,7 +39,7 @@ public class battle_start : MonoBehaviour {
                 j++;
                 l -= 8;
             }
-            pos = new Vector3(-5, 3 + j, (l * 1.1f) - (team_two_size / 2));
+            pos = new Vector3(-3, 3 + j, (l * 1.1f) - (team_two_size / 2));
             var boid_prefab = Resources.Load("Boid2") as GameObject;
             var boid = GameObject.Instantiate(boid_prefab, pos, transform.rotation);
 
@@ -49,12 +49,13 @@ public class battle_start : MonoBehaviour {
             //var boid_script = boid.GetComponent<BasicBoid>();
             //set mass
             //var boid_mass = boid_script.mass;
-            gameObjectsRigidBody.mass = 2;
+            gameObjectsRigidBody.mass = 1f;
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+       //transform.Rotate(6*new Vector3(1,0,0) * Time.deltaTime);
+
+    }
 }

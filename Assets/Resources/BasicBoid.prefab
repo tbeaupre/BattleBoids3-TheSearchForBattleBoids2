@@ -90,7 +90,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188042715452424}
-  m_Material: {fileID: 13400000, guid: 0bd6a0952f9639149bf76b8b1d869585, type: 2}
+  m_Material: {fileID: 13400000, guid: 88c542e6027a48f498d0cc4ca84df9d1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -108,12 +108,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  target_friend: {fileID: 0}
   boid: {fileID: 0}
   enemy: 
   center: {x: 0, y: 0, z: 0}
   count: 0
+  count2: 0
+  count3: 0
   rbody: {fileID: 0}
   speed: 0
   mass: 0
+  size_x: 0
+  size_y: 0
+  size_z: 0
   push_strength: 0
   push_delay: 0
+  jump_strength: 0
+  jump_delay: 0
