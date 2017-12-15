@@ -11,7 +11,6 @@ public class BasicBoid : BoidParent {
         count3 = 200;
 
 		speed = 1600f;
-        mass = 2;
         size_x = 1;
         size_y = 1;
         size_z = 1;

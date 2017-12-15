@@ -12,7 +12,6 @@ public class Boid_enemy : BoidParent
         friend = "team2";
 
         speed = 1600f;
-        mass = 2;
         size_x = 0.7f+Random.Range(1,2);
         size_y = 0.7f;
         size_z = 0.7f;

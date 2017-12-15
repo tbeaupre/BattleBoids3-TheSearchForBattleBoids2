@@ -8,27 +8,27 @@ public class BoidParent : MonoBehaviour
     private GameObject target_friend;
     public GameObject boid;
     public GameObject controller;
-    private string enemy;
-    private string friend;
-    private Vector3 center = new Vector3(0, 0, 0);
-    private int count = 0;
-    private int count2 = 0;
-    private int count3 = 0;
+    protected string enemy;
+    protected string friend;
+    protected Vector3 center = new Vector3(0, 0, 0);
+    protected int count = 0;
+    protected int count2 = 0;
+    protected int count3 = 0;
 
     public Rigidbody rbody;
 
     //stats
-    private float speed;
-    private float size_x;
-    private float size_y;
-    private float size_z;
-    private float bounciness;
-    private float fear;
-    private float cohesion;
-    private float push_strength;
-    private float push_delay;
-    private float jump_strength;
-    private float jump_delay;
+    protected float speed;
+    protected float size_x;
+    protected float size_y;
+    protected float size_z;
+    protected float bounciness;
+    protected float fear;
+    protected float cohesion;
+    protected float push_strength;
+    protected float push_delay;
+    protected float jump_strength;
+    protected float jump_delay;
 
     private int team;
 
