@@ -4,92 +4,137 @@ using UnityEngine;
 
 public class BoidParent : MonoBehaviour
 {
-    public GameObject target;
-    public GameObject target_friend;
+    private GameObject target;
+    private GameObject target_friend;
     public GameObject boid;
-    public string enemy;
-    public string friend;
-    public Vector3 center = new Vector3(0, 0, 0);
-    public int count = 0;
-    public int count2 = 0;
-    public int count3 = 0;
+    public GameObject controller;
+    private string enemy;
+    private string friend;
+    private Vector3 center = new Vector3(0, 0, 0);
+    private int count = 0;
+    private int count2 = 0;
+    private int count3 = 0;
 
     public Rigidbody rbody;
 
     //stats
-    public float speed;
-    public float mass;
-    public float bounciness;
-    public float size_x;
-    public float size_y;
-    public float size_z;
-    public float cohesion;
-    public float push_strength;
-    public float push_delay;
-    public float jump_strength;
-    public float jump_delay;
+    private float speed;
+    private float size_x;
+    private float size_y;
+    private float size_z;
+    private float bounciness;
+    private float fear;
+    private float cohesion;
+    private float push_strength;
+    private float push_delay;
+    private float jump_strength;
+    private float jump_delay;
+
+    private int team;
 
     // Use this for initialization
     void Start()
     {
-
         //speed = 100f;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        float step = speed * Time.deltaTime;
+        var heading = center - transform.position;
+        var distance = heading.magnitude;
+        var direction = heading / distance;
 
+        if (transform.position.y < -40 || transform.position.y > 30) {
+            Destroy(gameObject);
+        }
+
+        if (distance > (20-fear)/2) {
+            direction = heading / distance;
+            rbody.AddForce(direction * step);
+        }
+
+        if (count > push_delay) {
+            count = 0;
+            push();
+        }
+        count++;
+
+        if (count2 > jump_delay) {
+            count2 = 0;
+            jump();
+        }
+        count2++;
+
+        if (count3 > 60)
+        {
+            count3 = 0;
+            find_friend();
+        }
+        count3++;
+        move_towards_friend();
     }
 
-    public void push()
-    {
-        GameObject[] gos = GameObject.FindGameObjectsWithTag(enemy);
+    public void push() {
         var dist = 10000f;
+        float distance;
         Vector3 heading;
         Vector3 direction;
-        float distance;
-        for (var i = 0; i < gos.Length; i++)
+        GameObject[] boid_array;
+        if (team == 1) {
+            boid_array = GameObject.FindGameObjectsWithTag("team2");
+        }
+        else {
+            boid_array = GameObject.FindGameObjectsWithTag("team1");
+        }
+        for (var i = 0; i < boid_array.Length; i++)
         {
-            heading = gos[i].transform.position - transform.position;
+            heading = boid_array[i].transform.position - transform.position;
             distance = heading.magnitude;
             if (distance < dist)
             {
                 dist = distance;
-                target = gos[i];
+                target = boid_array[i];
             }
         }
-        heading = target.transform.position - transform.position;
-        distance = heading.magnitude;
-        direction = heading / distance;
-        rbody.AddForce(direction * push_strength, ForceMode.Impulse);
+        //if (target != null) {
+            heading = target.transform.position - transform.position;
+            distance = heading.magnitude;
+            direction = heading / distance;
+            rbody.AddForce(direction * push_strength, ForceMode.Impulse);
+        //}
     }
 
     public void jump() {
         rbody.AddForce(new Vector3(0, 1, 0) * jump_strength, ForceMode.Impulse);
     }
 
-    public void find_friend()
-    {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(friend);
+    public void find_friend() {
         var dist = 10000f;
-        for (var i = 0; i < objects.Length; i++)
-        {
-            float dist2 = Vector3.Distance(objects[i].transform.position, transform.position);
-            if (dist2 < dist && dist2 > 5)
-            {
-                dist = dist2;
-                target_friend = objects[i];
+        GameObject[] boid_array;
+        if (team == 1) {
+            boid_array = GameObject.FindGameObjectsWithTag("team1");
+        } else {
+            boid_array = GameObject.FindGameObjectsWithTag("team2");
+        }
+        for (var i = 0; i < boid_array.Length; i++) {
+            if (boid_array[i]) {
+                float dist2 = Vector3.Distance(boid_array[i].transform.position, transform.position);
+                if (dist2 < dist && dist2 > 5) {
+                    dist = dist2;
+                    target_friend = boid_array[i];
+                }
             }
         }
-       
     }
 
     public void move_towards_friend () {
-        Vector3 heading = target_friend.transform.position - transform.position;
-        float distance = heading.magnitude;
-        Vector3 direction = heading / distance;
-        rbody.AddForce(direction * cohesion);
+        if (target_friend) {
+            Vector3 heading = target_friend.transform.position - transform.position;
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance;
+            rbody.AddForce(direction * cohesion);
+        }
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -97,6 +142,35 @@ public class BoidParent : MonoBehaviour
             collision.rigidbody.AddForce(bounciness*(collision.transform.position - transform.position));
         }
     }
-    
 
+    public void set_stats (int player, float Speed, float Mass, float Size_x, float Size_y, float Size_z, float Bounciness, float Fear, float Cohesion, float Push_strength, float Push_delay, float Jump_strength, float Jump_delay, float Color) {
+        Mass = 1 + (Mass / 4);
+        speed = Speed*1000/Mass;
+        size_x = 0.5F+Size_x/12;
+        size_y = 0.5F+Size_y/12;
+        size_z = 0.5F+Size_x/12;
+        bounciness = Bounciness*6/Mass;
+        fear = Fear;
+        cohesion = Cohesion;
+
+        push_strength = Push_strength*7/Mass;
+        push_delay = Push_delay*4;
+        jump_strength = Jump_strength*9/Mass;
+        jump_delay = Jump_delay*4;
+
+        team = player;
+
+        Renderer rend = GetComponent<Renderer>();
+        Color color;
+        if (team == 1) {
+            color = new Color(0.5F+Color/40, 1F, 0F);
+        } else {  
+            color = new Color(1F, 0F, 0.5F+Color/40);
+        }
+        rend.material.SetColor("_Color", color);
+
+        transform.localScale = new Vector3(size_x, size_y, size_z);
+        rbody.mass = Mass;
+    }
+    
 }
